@@ -59,8 +59,8 @@ BASE_QUERY="${BASE_QUERY:-{app=~\".+\"}}"
 
 ```bash
 BASE_QUERY='{app="nginx"}' ./export_log_plain.sh \
-  "2026-09-22T00:00:00Z" \
-  "2026-09-22T01:00:00Z" \
+  "2026-09-22T00:00:00+07:00" \
+  "2026-09-22T01:00:00+07:00" \
   "./logs/nginx.log"
 ```
 
@@ -87,12 +87,14 @@ export LOGCLI_EXPORT_PASSWORD='รหัสผ่านของคุณ'
 
 ## รูปแบบเวลา
 
-พารามิเตอร์ `FROM` และ `TO` จะถูกส่งต่อให้ `logcli --from` และ `logcli --to` โดยตรง แนะนำให้ใช้เวลาแบบ RFC3339 เช่น:
+พารามิเตอร์ `FROM` และ `TO` จะถูกส่งต่อให้ `logcli --from` และ `logcli --to` โดยตรง แนะนำให้ใช้เวลาแบบ RFC3339 พร้อม timezone offset เช่น:
 
 ```text
-2026-09-22T00:00:00Z
-2026-09-22T01:00:00Z
+2026-09-22T00:00:00+07:00
+2026-09-22T01:00:00+07:00
 ```
+
+ตัวอย่างด้านบนคือเวลาโซนไทย `UTC+07:00` หากต้องการใช้ UTC สามารถใช้ `Z` แทน timezone offset ได้ เช่น `2026-09-22T00:00:00Z`
 
 ## 1. ส่งออก log ตามช่วงเวลาเป็นไฟล์ `.log` ปกติ
 
@@ -102,8 +104,8 @@ export LOGCLI_EXPORT_PASSWORD='รหัสผ่านของคุณ'
 
 ```bash
 ./export_log_plain.sh \
-  "2026-09-22T00:00:00Z" \
-  "2026-09-22T01:00:00Z" \
+  "2026-09-22T00:00:00+07:00" \
+  "2026-09-22T01:00:00+07:00" \
   "./logs/app.log"
 ```
 
@@ -121,8 +123,8 @@ export LOGCLI_EXPORT_PASSWORD='รหัสผ่านของคุณ'
 
 ```bash
 ./export_log_plain_query.sh \
-  "2026-09-22T00:00:00Z" \
-  "2026-09-22T01:00:00Z" \
+  "2026-09-22T00:00:00+07:00" \
+  "2026-09-22T01:00:00+07:00" \
   "./logs/error.log" \
   '|= "error"'
 ```
@@ -137,8 +139,8 @@ export LOGCLI_EXPORT_PASSWORD='รหัสผ่านของคุณ'
 
 ```bash
 ./export_log_plain_query.sh \
-  "2026-09-22T00:00:00Z" \
-  "2026-09-22T01:00:00Z" \
+  "2026-09-22T00:00:00+07:00" \
+  "2026-09-22T01:00:00+07:00" \
   "./logs/nginx.log" \
   '{app="nginx"} |= "500"'
 ```
@@ -153,8 +155,8 @@ export LOGCLI_EXPORT_PASSWORD='รหัสผ่านของคุณ'
 
 ```bash
 ./export_log_archive.sh \
-  "2026-09-22T00:00:00Z" \
-  "2026-09-22T01:00:00Z" \
+  "2026-09-22T00:00:00+07:00" \
+  "2026-09-22T01:00:00+07:00" \
   "./logs/app.7z"
 ```
 
@@ -164,8 +166,8 @@ export LOGCLI_EXPORT_PASSWORD='รหัสผ่านของคุณ'
 
 ```bash
 INNER_LOG_NAME="app-2026-09-22.log" ./export_log_archive.sh \
-  "2026-09-22T00:00:00Z" \
-  "2026-09-22T01:00:00Z" \
+  "2026-09-22T00:00:00+07:00" \
+  "2026-09-22T01:00:00+07:00" \
   "./logs/app.7z"
 ```
 
@@ -177,8 +179,8 @@ INNER_LOG_NAME="app-2026-09-22.log" ./export_log_archive.sh \
 
 ```bash
 ./export_log_archive_query.sh \
-  "2026-09-22T00:00:00Z" \
-  "2026-09-22T01:00:00Z" \
+  "2026-09-22T00:00:00+07:00" \
+  "2026-09-22T01:00:00+07:00" \
   "./logs/error.7z" \
   '|= "error"'
 ```
@@ -187,8 +189,8 @@ INNER_LOG_NAME="app-2026-09-22.log" ./export_log_archive.sh \
 
 ```bash
 ./export_log_archive_query.sh \
-  "2026-09-22T00:00:00Z" \
-  "2026-09-22T01:00:00Z" \
+  "2026-09-22T00:00:00+07:00" \
+  "2026-09-22T01:00:00+07:00" \
   "./logs/nginx-error.7z" \
   '{app="nginx"} |= "error"'
 ```
